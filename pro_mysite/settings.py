@@ -39,6 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'users',
+    'news',
+    'doc',
+    'course',
+    'verifications',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +57,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'pro_mysite.urls'
+
+AUTH_USER_MODEL = 'users.User'
+
 
 TEMPLATES = [
     {
@@ -70,22 +78,9 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = 'pro_mysite.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/2.1/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',   # 数据库引擎
-#         'NAME': 'mysite',                       # 数据库名称
-#         'USER': 'xiaohong',                     # 数据库登录用户名
-#         'PASSWORD': 'xiaohong',                 # 密码
-#         'HOST': '127.0.0.1',                    # 数据库主机IP，如保持默认，则为127.0.0.1
-#         'PORT': 3306,                           # 数据库端口号，如保持默认，则为3306
-#     }
-# }
 
 DATABASES = {
     'default': {
@@ -157,6 +152,30 @@ LOGGING = {
             'level': 'INFO',  # 日志器接收的最低日志级别
         },
     }
+}
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/0",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    },
+"verify_codes": {
+    "BACKEND": "django_redis.cache.RedisCache",
+    "LOCATION": "redis://127.0.0.1:6379/1",
+    "OPTIONS": {
+        "CLIENT_CLASS": "django_redis.client.DefaultClient",
+    }
+},
+"session": {
+    "BACKEND": "django_redis.cache.RedisCache",
+    "LOCATION": "redis://127.0.0.1:6379/2",
+    "OPTIONS": {
+        "CLIENT_CLASS": "django_redis.client.DefaultClient",
+    }
+},
 }
 
 # Internationalization
